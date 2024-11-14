@@ -1,1 +1,121 @@
-"local lights = script.Parent.Parent.Body.Lights\n\nlocal vehseat = script.Parent.VehicleSeat\n\nlocal revlights = lights.ReverseLights\n\nlocal extlights = lights.ExteriorLights\nlocal batlights = script.Lights\n\nlocal leftblinkerval = script.LBlinker\nlocal rightblinkerval = script.RBlinker\nlocal hazardsval = script.Hazards\n\nlocal intlights = lights.InteriorLights\n\nlocal brakelights = lights.BrakeLights\nlocal BrakeLightsEnabled = script.BrakeLightsFunctional\n\nbatlights.Changed:Connect(function()\n\tif batlights.Value == true then\n\t\textlights.FrontIdentLights.Material = Enum.Material.Neon\n\t\textlights.ExteriorIdentLights.Material = Enum.Material.Neon\n\t\textlights.BeamsL.Effect.Light.Enabled = true\n\t\textlights.BeamsR.Effect.Light.Enabled = true\n\t\textlights.BeamsL.Union.Material = Enum.Material.Neon\n\t\textlights.BeamsR.Union.Material = Enum.Material.Neon\n\t\textlights.BeamsL.ExteriorBeamsL.SurfaceLight.Enabled = true\n\t\textlights.BeamsR.ExteriorBeamsR.SurfaceLight.Enabled = true\n\t\tintlights.LightsL.Material = Enum.Material.Neon\n\t\tintlights.LightsR.Material = Enum.Material.Neon\n\t\tintlights.InteriorLights.PointLight.Enabled = true\n\telseif batlights.Value == false then\n\t\textlights.FrontIdentLights.Material = Enum.Material.Glass\n\t\textlights.ExteriorIdentLights.Material = Enum.Material.Glass\n\t\textlights.BeamsL.Effect.Light.Enabled = false\n\t\textlights.BeamsR.Effect.Light.Enabled = false\n\t\textlights.BeamsL.Union.Material = Enum.Material.Glass\n\t\textlights.BeamsR.Union.Material = Enum.Material.Glass\n\t\textlights.BeamsL.ExteriorBeamsL.SurfaceLight.Enabled = false\n\t\textlights.BeamsR.ExteriorBeamsR.SurfaceLight.Enabled = false\n\t\tintlights.LightsL.Material = Enum.Material.Glass\n\t\tintlights.LightsR.Material = Enum.Material.Glass\n\t\tintlights.InteriorLights.PointLight.Enabled = false\n\tend\nend)\n\n\nleftblinkerval.Event.OnServerEvent:Connect(function()\n\tif rightblinkerval.Value == false then\n\t\tif leftblinkerval.Value == false then\n\t\t\tleftblinkerval.Value = true\n\t\telseif leftblinkerval.Value == true then\n\t\t\tleftblinkerval.Value = false\n\t\tend\n\tend\nend)\n\n\n\nrightblinkerval.Event.OnServerEvent:Connect(function()\n\tif leftblinkerval.Value == false then\n\t\tif rightblinkerval.Value == false then\n\t\t\trightblinkerval.Value = true\n\t\telseif rightblinkerval.Value == true then\n\t\t\trightblinkerval.Value = false\n\t\tend\n\tend\nend)\n\nhazardsval.Event.OnServerEvent:Connect(function()\n\tif rightblinkerval.Value == false and leftblinkerval.Value == false then\n\t\tif hazardsval.Value == false then\n\t\t\thazardsval.Value = true\n\t\telseif hazardsval.Value == true then\n\t\t\thazardsval.Value = false\n\t\tend\n\tend\nend)\n\nscript.Parent.Gear.Changed:Connect(function()\n\tif script.Parent.Gear.Value == -1 then\n\t\trevlights.LeftLight.Material = Enum.Material.Neon\n\t\trevlights.RightLight.Material = Enum.Material.Neon\n\telseif script.Parent.Gear.Value == 0 and 1 then\n\t\trevlights.LeftLight.Material = Enum.Material.Glass\n\t\trevlights.RightLight.Material = Enum.Material.Glass\n\tend\nend)\n\nwhile true do\n\tif BrakeLightsEnabled.Value == true then\n\t\tif vehseat.Throttle == -1 then\n\t\t\tbrakelights.CtrBrakeLights.Material = Enum.Material.Neon\n\t\t\tbrakelights.BrakeLights.Material = Enum.Material.Neon\n\t\t\tbrakelights.CtrBrakeLights.SurfaceLight.Enabled = true\n\t\t\tbrakelights.BrakeLights.SurfaceLight.Enabled = true\n\t\telseif vehseat.Throttle == 0 then\n\t\t\tbrakelights.CtrBrakeLights.Material = Enum.Material.Neon\n\t\t\tbrakelights.BrakeLights.Material = Enum.Material.Neon\n\t\t\tbrakelights.CtrBrakeLights.SurfaceLight.Enabled = true\n\t\t\tbrakelights.BrakeLights.SurfaceLight.Enabled = true\n\t\telseif vehseat.Throttle == 1 then\n\t\t\tbrakelights.CtrBrakeLights.Material = Enum.Material.Glass\n\t\t\tbrakelights.BrakeLights.Material = Enum.Material.Glass\n\t\t\tbrakelights.CtrBrakeLights.SurfaceLight.Enabled = false\n\t\t\tbrakelights.BrakeLights.SurfaceLight.Enabled = false\n\t\tend\n\tend\n\twait()\nend"
+local lights = script.Parent.Parent.Body.Lights
+
+local vehseat = script.Parent.VehicleSeat
+
+local revlights = lights.ReverseLights
+
+local extlights = lights.ExteriorLights
+local batlights = script.Lights
+
+local leftblinkerval = script.LBlinker
+local rightblinkerval = script.RBlinker
+local hazardsval = script.Hazards
+
+local intlights = lights.InteriorLights
+local intlightval = script.InteriorLights
+
+local brakelights = lights.BrakeLights
+local BrakeLightsEnabled = script.BrakeLightsFunctional
+
+batlights.Changed:Connect(function()
+	if batlights.Value == true then
+		extlights.FrontIdentLights.Material = Enum.Material.Neon
+		extlights.ExteriorIdentLights.Material = Enum.Material.Neon
+		extlights.BeamsL.Effect.Light.Enabled = true
+		extlights.BeamsR.Effect.Light.Enabled = true
+		extlights.BeamsL.Union.Material = Enum.Material.Neon
+		extlights.BeamsR.Union.Material = Enum.Material.Neon
+		extlights.BeamsL.ExteriorBeamsL.SurfaceLight.Enabled = true
+		extlights.BeamsR.ExteriorBeamsR.SurfaceLight.Enabled = true
+	elseif batlights.Value == false then
+		extlights.FrontIdentLights.Material = Enum.Material.Glass
+		extlights.ExteriorIdentLights.Material = Enum.Material.Glass
+		extlights.BeamsL.Effect.Light.Enabled = false
+		extlights.BeamsR.Effect.Light.Enabled = false
+		extlights.BeamsL.Union.Material = Enum.Material.Glass
+		extlights.BeamsR.Union.Material = Enum.Material.Glass
+		extlights.BeamsL.ExteriorBeamsL.SurfaceLight.Enabled = false
+		extlights.BeamsR.ExteriorBeamsR.SurfaceLight.Enabled = false
+	end
+end)
+
+
+leftblinkerval.Event.OnServerEvent:Connect(function()
+	if rightblinkerval.Value == false then
+		if leftblinkerval.Value == false then
+			leftblinkerval.Value = true
+		elseif leftblinkerval.Value == true then
+			leftblinkerval.Value = false
+		end
+	end
+end)
+
+
+
+rightblinkerval.Event.OnServerEvent:Connect(function()
+	if leftblinkerval.Value == false then
+		if rightblinkerval.Value == false then
+			rightblinkerval.Value = true
+		elseif rightblinkerval.Value == true then
+			rightblinkerval.Value = false
+		end
+	end
+end)
+
+hazardsval.Event.OnServerEvent:Connect(function()
+	if rightblinkerval.Value == false and leftblinkerval.Value == false then
+		if hazardsval.Value == false then
+			hazardsval.Value = true
+		elseif hazardsval.Value == true then
+			hazardsval.Value = false
+		end
+	end
+end)
+
+intlightval.Event.OnServerEvent:Connect(function()
+	if batlights.Value == true then
+		if intlightval.Value == false then
+			intlights.LightsL.Material = Enum.Material.Neon
+			intlights.LightsR.Material = Enum.Material.Neon
+			intlights.InteriorLights.PointLight.Enabled = true
+			intlightval.Value = true
+		elseif intlightval.Value == true then
+			intlights.LightsL.Material = Enum.Material.Glass
+			intlights.LightsR.Material = Enum.Material.Glass
+			intlights.InteriorLights.PointLight.Enabled = false
+			intlightval.Value = false
+		end
+	end
+end)
+
+script.Parent.Gear.Changed:Connect(function()
+	if script.Parent.Gear.Value == -1 then
+		revlights.LeftLight.Material = Enum.Material.Neon
+		revlights.RightLight.Material = Enum.Material.Neon
+	elseif script.Parent.Gear.Value == 0 and 1 then
+		revlights.LeftLight.Material = Enum.Material.Glass
+		revlights.RightLight.Material = Enum.Material.Glass
+	end
+end)
+
+while true do
+	if BrakeLightsEnabled.Value == true then
+		if vehseat.Throttle == -1 then
+			brakelights.CtrBrakeLights.Material = Enum.Material.Neon
+			brakelights.BrakeLights.Material = Enum.Material.Neon
+			brakelights.CtrBrakeLights.SurfaceLight.Enabled = true
+			brakelights.BrakeLights.SurfaceLight.Enabled = true
+		elseif vehseat.Throttle == 0 then
+			brakelights.CtrBrakeLights.Material = Enum.Material.Neon
+			brakelights.BrakeLights.Material = Enum.Material.Neon
+			brakelights.CtrBrakeLights.SurfaceLight.Enabled = true
+			brakelights.BrakeLights.SurfaceLight.Enabled = true
+		elseif vehseat.Throttle == 1 then
+			brakelights.CtrBrakeLights.Material = Enum.Material.Glass
+			brakelights.BrakeLights.Material = Enum.Material.Glass
+			brakelights.CtrBrakeLights.SurfaceLight.Enabled = false
+			brakelights.BrakeLights.SurfaceLight.Enabled = false
+		end
+	end
+	wait()
+end
